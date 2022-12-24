@@ -1,0 +1,13 @@
+*.class
+*.xml
+/bin/
+/modules/
+/.settings/
+/.gradle/
+/build/
+.classpath
+.project
+/.idea/
+/.vscode/
+/out/
+/server/
