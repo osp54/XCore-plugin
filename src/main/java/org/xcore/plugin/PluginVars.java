@@ -12,6 +12,7 @@ import static mindustry.Vars.dataDirectory;
 
 public class PluginVars {
     public static Fi configFile = dataDirectory.child("xcconfig.json");
+    public static Fi serversConfigFile = Fi.get(System.getProperty("user.home")).child("servers.json");
     public static Config config;
     public static Gson gson = new GsonBuilder()
             .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
@@ -19,6 +20,4 @@ public class PluginVars {
             .disableHtmlEscaping()
             .serializeNulls()
             .create();
-
-    public static JavelinSocket javelinSocket;
 }
