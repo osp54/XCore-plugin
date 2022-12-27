@@ -4,6 +4,7 @@ import arc.Core;
 import arc.func.Cons;
 import mindustry.server.ServerControl;
 
+import org.jetbrains.annotations.NotNull;
 import org.jline.reader.EndOfFileException;
 import org.jline.reader.LineReader;
 import org.jline.reader.LineReaderBuilder;
@@ -79,7 +80,7 @@ public class Console {
         }
 
         @Override
-        public void write(byte[] buf, int off, int len) {
+        public void write(@NotNull byte[] buf, int off, int len) {
             for (int i = 0; i < len; i++) {
                 write(buf[off + i]);
             }

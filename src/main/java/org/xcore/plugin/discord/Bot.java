@@ -64,7 +64,7 @@ public class Bot {
 
     public static void sendJoinLeaveEventMessage(String playerName, String server, Boolean join) {
         getServerLogChannel(server).sendMessage(
-                Strings.format("`@`" + (join ? "joined" : "left"), playerName)
+                Strings.format("`@` " + (join ? "joined" : "left"), playerName)
         ).queue();
     }
 }

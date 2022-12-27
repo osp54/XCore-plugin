@@ -1,6 +1,5 @@
 package org.xcore.plugin.discord;
 
-import arc.util.Log;
 import fr.xpdustry.javelin.JavelinPlugin;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -18,7 +17,6 @@ public class DiscordListeners extends ListenerAdapter {
         if (!servers.containsValue(event.getChannel().getIdLong(), false)) return;
 
         String server = servers.findKey(event.getChannel().getIdLong(), false);
-        Log.info(server);
 
         if (server.equals(config.server)) {
             XcorePlugin.sendMessageFromDiscord(event.getAuthor().getName(), event.getMessage().getContentRaw());

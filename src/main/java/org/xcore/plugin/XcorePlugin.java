@@ -11,9 +11,15 @@ import org.xcore.plugin.comp.Config;
 import org.xcore.plugin.comp.ServersConfig;
 import org.xcore.plugin.features.Console;
 
+import java.util.HashSet;
+
 @SuppressWarnings("unused")
 public class XcorePlugin extends Plugin {
     public static boolean isSocketServer;
+
+    public static double ratio = 0.6;
+    public static HashSet<String> votes = new HashSet<>();
+    public static boolean rtvEnable = true;
     @Override
     public void init() {
         Config.load();
