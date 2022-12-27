@@ -8,11 +8,9 @@ import static org.xcore.plugin.PluginVars.*;
 public class Config {
     public String server = "server";
     public boolean consoleEnabled = true;
-    public boolean discordBotEnabled = false;
     public String discordBotToken = "token here";
-    public String discordBotPrefix = "!";
+    public long discordGuildId = 0L;
     public long discordAdminRoleId = 0L;
-    public long discordMainChannelId = 0L;
 
     public static void load() {
         if (configFile.exists()) {

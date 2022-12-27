@@ -3,6 +3,7 @@ package org.xcore.plugin;
 import arc.util.CommandHandler;
 import arc.util.Log;
 import arc.util.Strings;
+import mindustry.gen.Call;
 import mindustry.mod.Plugin;
 import org.xcore.plugin.commands.ClientCommands;
 import org.xcore.plugin.commands.ServerCommands;
@@ -37,5 +38,12 @@ public class XcorePlugin extends Plugin {
     }
     public static void err(String text, Object... values) {
         Log.errTag("XCore", Strings.format(text, values));
+    }
+    public static void discord(String text, Object... values) {
+        Log.infoTag("Discord", Strings.format(text, values));
+    }
+    public static void sendMessageFromDiscord(String authorName, String message) {
+        discord("@: @", authorName, message);
+        Call.sendMessage(Strings.format("[blue][Discord][] @: @", authorName, message));
     }
 }

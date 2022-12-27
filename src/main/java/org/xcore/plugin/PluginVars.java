@@ -4,8 +4,6 @@ import arc.files.Fi;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import fr.xpdustry.javelin.JavelinPlugin;
-import fr.xpdustry.javelin.JavelinSocket;
 import org.xcore.plugin.comp.Config;
 
 import static mindustry.Vars.dataDirectory;

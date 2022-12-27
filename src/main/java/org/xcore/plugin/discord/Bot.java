@@ -15,23 +15,18 @@ import static org.xcore.plugin.PluginVars.*;
 public class Bot {
     public static JDA jda;
     public static Role adminRole;
-    public static TextChannel mainChannel;
 
     public static boolean isConnected = false;
     public static void connect() {
         try {
             jda = JDABuilder.createLight(config.discordBotToken)
                     .enableIntents(GUILD_MEMBERS, MESSAGE_CONTENT)
+                    .addEventListeners(new DiscordListeners())
                     .build()
                     .awaitReady();
 
             isConnected = true;
-
             adminRole = jda.getRoleById(config.discordAdminRoleId);
-
-            mainChannel = jda.getTextChannelById(config.discordMainChannelId);
-
-
         } catch (Exception e) {
             XcorePlugin.err("Error while connecting to discord: ");
             e.printStackTrace();
@@ -54,6 +49,13 @@ public class Bot {
         getServerLogChannel(server).sendMessage(
                 Strings.format("`@: @`", playerName, message)
         ).queue();
+    }
+
+    public static void sendServerAction(String message) {
+        sendServerAction(message, config.server);
+    }
+    public static void sendServerAction(String message, String server) {
+        getServerLogChannel(server).sendMessage(message).queue();
     }
 
     public static void sendJoinLeaveEventMessage(String playerName, Boolean join) {

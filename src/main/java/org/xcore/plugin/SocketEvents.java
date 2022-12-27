@@ -15,6 +15,16 @@ public class SocketEvents {
         }
     }
 
+    public static final class ServerActionEvent implements JavelinEvent {
+        public String message;
+        public String server;
+
+        ServerActionEvent(String message, String server) {
+            this.message = message;
+            this.server = server;
+        }
+    }
+
     public static final class PlayerJoinLeaveEvent implements JavelinEvent {
         public String playerName;
         public String server;
@@ -26,6 +36,18 @@ public class SocketEvents {
             this.playerName = playerName;
             this.server = server;
             this.join = join;
+        }
+    }
+
+    public static final class DiscordMessageEvent implements JavelinEvent {
+        public String authorName;
+        public String message;
+        public String server;
+
+        public DiscordMessageEvent(String authorName, String message, String server) {
+            this.authorName = authorName;
+            this.message = message;
+            this.server = server;
         }
     }
 }
