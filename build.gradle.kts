@@ -1,21 +1,45 @@
+
+import fr.xpdustry.toxopid.Toxopid
+import fr.xpdustry.toxopid.dsl.anukenJitpack
+import fr.xpdustry.toxopid.dsl.mindustryDependencies
+import fr.xpdustry.toxopid.spec.ModMetadata
+import fr.xpdustry.toxopid.spec.ModPlatform
+import fr.xpdustry.toxopid.task.MindustryExec
+
 plugins {
     java
+    id("fr.xpdustry.toxopid") version "3.0.0"
 }
 
 group = "org.xcore.plugin"
 version = "1.0"
+val mindustryVersion = "140.4"
+
+toxopid {
+    compileVersion.set("v$mindustryVersion")
+    runtimeVersion.set("v$mindustryVersion")
+    platforms.add(ModPlatform.HEADLESS)
+}
+
+val metadata = ModMetadata(
+    name = "xcore-plugin",
+    displayName = "XCore-plugin",
+    description = "The main plugin for XCore servers.",
+    author = "osp54, OSPx#7122",
+    version = project.version.toString(),
+    minGameVersion = mindustryVersion,
+    main = "${project.group}.XcorePlugin",
+    dependencies = mutableListOf("xpdustry-javelin")
+)
 
 repositories {
     mavenCentral()
-    maven(url = "https://jitpack.io")
+    anukenJitpack()
     maven(url = "https://maven.xpdustry.fr/releases")
 }
 
 dependencies {
-    val mindustryVersion = "140.4"
-    compileOnly("com.github.Anuken.Arc:arc-core:v$mindustryVersion")
-    compileOnly("com.github.Anuken.Mindustry:core:v$mindustryVersion")
-    compileOnly("com.github.Anuken.Mindustry:server:v$mindustryVersion")
+    mindustryDependencies()
 
     compileOnly("fr.xpdustry:javelin-mindustry:1.2.0")
 
@@ -27,10 +51,34 @@ dependencies {
 }
 
 tasks.jar {
+    doFirst {
+        val temp = temporaryDir.resolve("plugin.json")
+        temp.writeText(metadata.toJson(true))
+        from(temp)
+    }
+
     from(configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) })
     duplicatesStrategy = DuplicatesStrategy.INCLUDE
 }
 
 tasks.withType<JavaCompile> {
     options.encoding = "UTF-8"
+}
+
+tasks.register("runMainServer", MindustryExec::class.java) {
+    group = Toxopid.TASK_GROUP_NAME
+    classpath(tasks.downloadMindustryServer)
+    mainClass.convention("mindustry.server.ServerLauncher")
+    modsPath.convention("./config/mods")
+    standardInput = System.`in`
+    mods.setFrom(setOf(tasks.jar, project.file("./build/libs/Javelin.jar")))
+}
+
+tasks.register("runServer", MindustryExec::class.java) {
+    group = Toxopid.TASK_GROUP_NAME
+    classpath(tasks.downloadMindustryServer)
+    mainClass.convention("mindustry.server.ServerLauncher")
+    modsPath.convention("./config/mods")
+    standardInput = System.`in`
+    mods.setFrom(setOf(tasks.jar, project.file("./build/libs/Javelin.jar")))
 }
